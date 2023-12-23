@@ -9,12 +9,12 @@ public interface UserService {
 
     User create(UserDTO userDTO);
 
-    User findById(String id);
+    User findById(Long id);
 
     List<User> findAll();
 
-    User update(String id, UserDTO userDTO);
+    void update(Long id, UserDTO userDTO);
 
-    User delete(String id);
+    void delete(Long id);
 
 }

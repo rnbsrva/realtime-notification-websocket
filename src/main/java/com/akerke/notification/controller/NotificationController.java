@@ -1,44 +1,45 @@
 package com.akerke.notification.controller;
 
+import com.akerke.notification.dto.NotificationDTO;
 import com.akerke.notification.dto.UserDTO;
+import com.akerke.notification.service.NotificationService;
 import com.akerke.notification.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("notification")
 @RequiredArgsConstructor
-public class UserController {
+public class NotificationController {
 
-    private final UserService userService;
+    private final NotificationService notificationService;
 
     @PostMapping
     ResponseEntity<?> save (
-            @RequestBody UserDTO userDTO
+            @RequestBody NotificationDTO notificationDTO
             ) {
-        return ResponseEntity.ok(userService.create(userDTO));
+        return ResponseEntity.ok(notificationService.save(notificationDTO));
     }
 
     @GetMapping("{id}")
     ResponseEntity<?> getById (
             @PathVariable Long id
     ){
-        return ResponseEntity.ok(userService.findById(id));
+        return ResponseEntity.ok(notificationService.findById(id));
     }
 
     @GetMapping()
     ResponseEntity<?> get (){
-        return ResponseEntity.ok(userService.findAll());
+        return ResponseEntity.ok(notificationService.findAll());
     }
 
     @PatchMapping("{id}")
     ResponseEntity<?> update (
             @PathVariable Long id,
-            @RequestBody UserDTO userDTO
+            @RequestBody NotificationDTO notificationDTO
     ){
-        userService.update(id, userDTO);
+        notificationService.update(id, notificationDTO);
         return ResponseEntity.ok().build();
     }
 
@@ -46,10 +47,7 @@ public class UserController {
     ResponseEntity<?> delete (
             @PathVariable Long id
     ){
-        userService.delete(id);
+        notificationService.delete(id);
         return  ResponseEntity.noContent().build();
     }
-
-//    @MessageMapping()
-
 }

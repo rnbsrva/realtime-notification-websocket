@@ -1,24 +1,31 @@
 package com.akerke.notification.entity;
 
 import com.akerke.notification.constants.NotificationType;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
-
-import java.io.Serializable;
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
-@RedisHash("notifications")
-public class Notification  implements Serializable {
+public class Notification {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private NotificationType notificationType;
     private String text;
     private Boolean isRead;
-    private Long recipientId;
+    @ManyToOne
+    @JsonProperty("ownerId")
+    private User user;
+
+    @JsonGetter("ownerId")
+    public Long getUserId(){
+        return this.user.getId();
+    }
 }

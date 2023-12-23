@@ -13,7 +13,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");

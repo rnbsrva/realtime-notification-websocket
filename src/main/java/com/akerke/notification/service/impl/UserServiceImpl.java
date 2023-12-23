@@ -3,15 +3,13 @@ package com.akerke.notification.service.impl;
 import com.akerke.notification.dto.UserDTO;
 import com.akerke.notification.entity.User;
 import com.akerke.notification.mapper.UserMapper;
+import com.akerke.notification.repository.NotificationRepository;
 import com.akerke.notification.repository.UserRepository;
 import com.akerke.notification.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -27,22 +25,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(String id) {
-        return null;
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow();
     }
 
     @Override
     public List<User> findAll() {
-        return null;
+        return userRepository.findAll();
     }
 
     @Override
-    public User update(String id, UserDTO userDTO) {
-        return null;
+    public void update(Long id, UserDTO userDTO) {
+        var user = this.findById(id);
+        userMapper.update(userDTO, user);
+        userRepository.save(user);
     }
 
     @Override
-    public User delete(String id) {
-        return null;
+    public void delete(Long id) {
+        var user = this.findById(id);
+        userRepository.delete(user);
     }
+
 }
