@@ -29,9 +29,10 @@ public class NotificationController {
         return ResponseEntity.ok(notificationService.findById(id));
     }
 
-    @GetMapping()
+    @GetMapping
     ResponseEntity<?> get (){
-        return ResponseEntity.ok(notificationService.findAll());
+        return ResponseEntity
+                .ok(notificationService.findAll());
     }
 
     @PatchMapping("{id}")

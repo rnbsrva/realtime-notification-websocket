@@ -9,6 +9,7 @@ import com.akerke.notification.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -39,7 +40,7 @@ import java.util.List;
     @Override
     public List<Notification> findAllByUserId(Long userId) {
         var user = userService.findById(userId);
-        return notificationRepository.findNotificationsByUser(user);
+        return new ArrayList<>(notificationRepository.findNotificationsByUser(user));
     }
 
     @Override

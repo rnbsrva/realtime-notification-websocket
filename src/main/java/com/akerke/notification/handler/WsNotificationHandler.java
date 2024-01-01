@@ -1,7 +1,6 @@
 package com.akerke.notification.handler;
 
 import com.akerke.notification.service.NotificationService;
-import com.akerke.notification.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -21,7 +20,10 @@ public class WsNotificationHandler {
             Long userId
     ){
         log.info("user [{}]session started", userId);
-        var notifications = notificationService.findAllByUserId(userId);
+        var notifications = notificationService.findAllByUserId(userId)
+                .stream()
+                .filter(n -> !n.getIsRead())
+                .toList();
 
         log.info("send message to staff {}", notifications);
         ws.convertAndSend("/topic/user/notifications/" + userId, notifications);

@@ -19,5 +19,4 @@ public interface NotificationService {
 
     void delete (Long id);
 
-
 }
